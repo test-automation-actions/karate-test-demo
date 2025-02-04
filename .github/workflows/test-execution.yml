@@ -8,7 +8,7 @@ on:
   #   branches:
   #     - develop
   schedule:
-    - cron: */10 0 * * *  # Runs daily at midnight UTC
+    - cron: '*/10 0 * * *'  # Runs daily at midnight UTC
 
 jobs:
   karate-tests:
