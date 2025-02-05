@@ -1,0 +1,35 @@
+name: Run Karate Tests
+
+on:
+  # push:
+  #   branches:
+  #     - feature/initial-code
+  # pull_request:
+  #   branches:
+  #     - develop
+  schedule:
+    - cron: '*/10 * * * *'  # Runs daily at midnight UTC
+
+jobs:
+  karate-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ Checkout Code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set Up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: 📦 Install Dependencies & Run Tests
+        run: mvn clean test
+
+      - name: 📜 Upload Karate Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: karate-reports
+          path: target/karate-reports/
