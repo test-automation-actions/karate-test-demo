@@ -1,12 +1,12 @@
 name: Run Karate Tests
 
 on:
-  # push:
-  #   branches:
-  #     - feature/initial-code
-  # pull_request:
-  #   branches:
-  #     - develop
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
   schedule:
     - cron: '*/10 * * * *'  # Runs daily at midnight UTC
 
