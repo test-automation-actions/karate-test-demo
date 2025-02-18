@@ -9,9 +9,11 @@ name: Run Karate Tests
   #     - develop
   # schedule:
   #   - cron: '0 * * * *'  # Runs daily at midnight UTC
+# on:
+#   repository_dispatch:
+#     types: [trigger-workflow]
 on:
-  repository_dispatch:
-    types: [trigger-workflow] 
+  workflow_dispatch:
 
 jobs:
   karate-tests:
