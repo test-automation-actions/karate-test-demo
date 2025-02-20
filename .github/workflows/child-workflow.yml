@@ -1,0 +1,16 @@
+name: ${{ github.event.inputs.workflow_name }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      workflow_name:
+        description: 'Workflow name passed from master'
+        required: true
+        default: 'Manual Run'
+
+jobs:
+  print-workflow-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Passed Workflow Name
+        run: echo "Received Workflow Name: ${{ github.event.inputs.workflow_name }}"
