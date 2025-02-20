@@ -13,4 +13,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Display Passed Workflow Name
-        run: echo "Received Workflow Name: ${{ github.event.inputs.workflow_name }}"
+        run: |
+          echo "Received Workflow Name: ${{ github.event.inputs.workflow_name }}"
