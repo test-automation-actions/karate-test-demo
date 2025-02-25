@@ -14,6 +14,11 @@ name: Run Karate Tests
 #     types: [trigger-workflow]
 on:
   workflow_dispatch:
+    inputs:
+      tags:
+        description: "Tags to execute"
+        default: ""
+        required: false
 
 jobs:
   karate-tests:
@@ -30,8 +35,15 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
+      - name: 📦 Install Dependencies & Run Tests With Tags
+        if: ${{ github.event.inputs.tags != '' }}
+        run: |
+          mvn clean test -Dkarate.options="--tags ${{ github.event.inputs.tags }}"
+      
       - name: 📦 Install Dependencies & Run Tests
-        run: mvn clean test
+        if: ${{ github.event.inputs.tags == '' }}
+        run: |
+          mvn clean test
 
       - name: 📜 Upload Karate Reports
         uses: actions/upload-artifact@v4
