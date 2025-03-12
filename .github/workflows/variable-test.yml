@@ -1,0 +1,42 @@
+name: variable replacement trigger
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  process_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Process Variables in Bash
+        run: |
+          # Read inputs from GitHub Actions (default values)
+          repo_name="${{ github.event.inputs.repo_name || 'test-e2e-smoke-tests' }}"
+          tags_data="${{ github.event.inputs.tags_data || 'NA' }}"
+
+          echo "Input Repo Name: $repo_name"
+          echo "Input Tags Data: $tags_data"
+
+          # Replace '-' with '_'
+          VAR_NAME=$(echo "${repo_name}" | sed 's/-/_/g')
+          VAR_NAME="${VAR_NAME}_TAGS"
+
+          # Convert to uppercase
+          VAR_NAME=$(echo "$VAR_NAME" | LC_ALL=C tr '[:lower:]' '[:upper:]')
+
+          # Default TAGS value
+          TAGS=""
+
+          # Handle 'NA' or empty tags
+          if [[ "$tags_data" == "NA" || -z "$tags_data" ]]; then
+              TAGS="no-tags"
+          else
+              TAGS=$(echo "$tags_data" | sed 's/@//g')
+          fi
+
+          echo "VAR_NAME: $VAR_NAME"
+          echo "TAGS: $TAGS"
+
+        shell: bash
