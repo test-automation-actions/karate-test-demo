@@ -1,0 +1,28 @@
+name: Handle List Input
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: "List of tags separated by ;"
+        required: false
+        default: "@tag1;@tag2;@tag3"
+        type: string
+
+jobs:
+  process_list:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show Input Value
+        run: echo "Raw Tags Input: ${{ inputs.tags }}"
+
+      - name: Convert List to Array
+        run: |
+          IFS=";" read -r -a TAGS_ARRAY <<< "${{ inputs.tags }}"
+          echo "Parsed Tags: ${TAGS_ARRAY[@]}"
+          
+          # Optional: Export each tag separately
+          for tag in "${TAGS_ARRAY[@]}"; do
+            echo "Tag: $tag"
+          done
