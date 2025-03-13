@@ -28,14 +28,19 @@ jobs:
             echo "Tag: $tag"
           done
           
-      - name: Convert to Space-Separated String
+      - name: Convert to Space-Separated String and Count
         run: |
           SPACE_SEPARATED_TAGS=$(echo "${{ inputs.tags }}" | tr ';' ' ')
-          echo "Converted Tags: $SPACE_SEPARATED_TAGS"
+          TAG_COUNT=$(echo $SPACE_SEPARATED_TAGS | wc -w)
           
-          # Export as an environment variable (optional)
-          echo "TAGS=$SPACE_SEPARATED_TAGS" >> $GITHUB_ENV
+          echo "Converted Tags: $SPACE_SEPARATED_TAGS"
+          echo "Number of Tags: $TAG_COUNT"
 
-      - name: Use Converted Tags
+          # Export as environment variables (optional)
+          echo "TAGS=$SPACE_SEPARATED_TAGS" >> $GITHUB_ENV
+          echo "TAG_COUNT=$TAG_COUNT" >> $GITHUB_ENV
+
+      - name: Use Counted Tags
         run: |
-          echo "Using tags: $TAGS"
+          echo "Total Tags: $TAG_COUNT"
+          echo "Tags: $TAGS"
