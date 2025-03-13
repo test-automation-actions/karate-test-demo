@@ -27,3 +27,15 @@ jobs:
           for tag in "${TAGS_ARRAY[@]}"; do
             echo "Tag: $tag"
           done
+          
+      - name: Convert to Space-Separated String
+        run: |
+          SPACE_SEPARATED_TAGS=$(echo "${{ inputs.tags }}" | tr ';' ' ')
+          echo "Converted Tags: $SPACE_SEPARATED_TAGS"
+          
+          # Export as an environment variable (optional)
+          echo "TAGS=$SPACE_SEPARATED_TAGS" >> $GITHUB_ENV
+
+      - name: Use Converted Tags
+        run: |
+          echo "Using tags: $TAGS"
