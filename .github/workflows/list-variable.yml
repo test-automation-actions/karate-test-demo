@@ -15,8 +15,9 @@ jobs:
 
     steps:
       - name: Show Input Value
-        run: echo "Raw Tags Input: ${{ inputs.tags }}"
-
+        run: |
+          echo "Raw Tags Input: ${{ inputs.tags }}"
+        
       - name: Convert List to Array
         run: |
           IFS=";" read -r -a TAGS_ARRAY <<< "${{ inputs.tags }}"
