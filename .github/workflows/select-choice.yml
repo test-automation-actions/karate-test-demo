@@ -1,0 +1,20 @@
+name: Manual Trigger Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select the Environment"
+        required: true
+        type: choice
+        default: Development   # Default value set
+        options:
+          - Development
+          - Production
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show selected environment
+        run: echo "Selected Environment is ${{ github.event.inputs.environment }}"
