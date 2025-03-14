@@ -1,4 +1,4 @@
-name: Manual Trigger Workflow
+name: Select Choice Trigger Workflow
 
 on:
   workflow_dispatch:
