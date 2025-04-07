@@ -1,17 +1,5 @@
 name: Run Karate Tests
 
-# on:
-  # push:
-  #   branches:
-  #     - develop
-  # pull_request:
-  #   branches:
-  #     - develop
-  # schedule:
-  #   - cron: '0 * * * *'  # Runs daily at midnight UTC
-# on:
-#   repository_dispatch:
-#     types: [trigger-workflow]
 on:
   workflow_dispatch:
 
