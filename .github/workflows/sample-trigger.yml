@@ -1,0 +1,22 @@
+name: Daily Scheduled Job
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"  # Runs every 10 mins
+  workflow_dispatch:       # Optional: allows manual trigger too
+
+jobs:
+  run-daily-task:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Print current time
+        run: echo "Current UTC time: $(date -u)"
+
+      - name: Run a custom script
+        run: |
+          echo "Running scheduled job..."
+          # Add your actual script or commands here
