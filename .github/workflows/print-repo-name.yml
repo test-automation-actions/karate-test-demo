@@ -1,0 +1,19 @@
+name: Print GitHub Repo Name
+
+on:
+  workflow_dispatch:  # Enables manual triggering from the GitHub UI
+
+jobs:
+  print-repo-name:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print full repository name (owner/repo)
+        run: |
+          echo "Full repo name: ${{ github.repository }}"
+
+      - name: Extract and print only the repo name
+        run: |
+          REPO="${{ github.repository }}"
+          REPO_NAME="${REPO##*/}"
+          echo "Repo name only: $REPO_NAME"
