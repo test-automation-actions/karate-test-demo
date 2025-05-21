@@ -1,0 +1,27 @@
+name: Hit GitHub Branch API
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_name:
+        description: 'Repository name (e.g., user/repo)'
+        required: true
+      branch_name:
+        description: 'Branch name (e.g., main)'
+        required: true
+
+jobs:
+  hit-branch-api:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Call GitHub API to get branch info
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_NAME: ${{ github.event.inputs.repo_name }}
+        BRANCH_NAME: ${{ github.event.inputs.branch_name }}
+      run: |
+        echo "Calling GitHub API for repo: $REPO_NAME, branch: $BRANCH_NAME"
+        curl -H "Authorization: Bearer $GITHUB_TOKEN" \
+             -H "Accept: application/vnd.github+json" \
+             https://api.github.com/repos/$REPO_NAME/branches/$BRANCH_NAME
