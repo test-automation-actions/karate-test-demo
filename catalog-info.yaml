@@ -1,11 +1,10 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: backstage
-  description: backstage.io
+  name: sample
   annotations:
     github.com/project-slug: test-automation-actions/karate-test-demo
 spec:
-  type: website
+  type: websites
+  owner: CNCF
   lifecycle: production
-  owner: user:guest
