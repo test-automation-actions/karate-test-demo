@@ -4,7 +4,7 @@ metadata:
   name: backstage
   description: backstage.io
   annotations:
-    github.com/project-slug: 'test-automation-actions/karate-test-demo'
+    github.com/project-slug: test-automation-actions/karate-test-demo
 spec:
   type: website
   lifecycle: production
