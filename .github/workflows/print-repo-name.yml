@@ -2,6 +2,10 @@ name: Print GitHub Repo Name
 
 on:
   workflow_dispatch:  # Enables manual triggering from the GitHub UI
+  push:
+    branches:
+      - develop
+      - 'release/**'
 
 jobs:
   print-repo-name:
