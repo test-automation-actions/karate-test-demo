@@ -1,38 +1,18 @@
-name: Parse Repos and Tags
+name: Print Raw Multiline Input
 
 on:
   workflow_dispatch:
     inputs:
       repo_tags:
-        description: 'Enter repo:tag1,tag2 per line (multiline supported)'
+        description: 'Enter each repo and tags in format repo:tag1,tag2 (one per line)'
         required: true
-        default: |
-          repo1:tag1,tag2
-          repo2:tag3,tag4
-          repo3:tagA
+        default: "repo1:tag1,tag2 repo2:tag3,tag4 repo3:tagX"
 
 jobs:
-  parse-and-print:
+  print-input:
     runs-on: ubuntu-latest
     steps:
-      - name: Parse and Print Repos and Tags
+      - name: Print Raw Input Exactly As-Is
         run: |
-          echo "Parsing repos and tags..."
-
-          # Convert escaped \n characters into real newlines
-          INPUT=$(echo -e "${{ github.event.inputs.repo_tags }}")
-
-          while IFS= read -r line; do
-            # Skip empty lines
-            [ -z "$line" ] && continue
-
-            repo=$(echo "$line" | cut -d':' -f1)
-            tags=$(echo "$line" | cut -d':' -f2)
-
-            echo "Repo: $repo"
-
-            IFS=',' read -ra tag_array <<< "$tags"
-            for tag in "${tag_array[@]}"; do
-              echo "  - Tag: $tag"
-            done
-          done <<< "$INPUT"
+          echo "Raw repo_tags input string:"
+          echo "${{ github.event.inputs.repo_tags }}"
