@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       repo_tags:
-        description: 'Enter each repo and its tags in format repo:tag1,tag2 (one per line)'
+        description: 'Enter repo:tag1,tag2 per line (multiline supported)'
         required: true
         default: |
           repo1:tag1,tag2
@@ -12,23 +12,19 @@ on:
           repo3:tagA
 
 jobs:
-  print-repos-tags:
+  parse-and-print:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Show raw input
+      - name: Parse and Print Repos and Tags
         run: |
-          echo "Raw input from UI:"
-          echo "${{ github.event.inputs.repo_tags }}"
+          echo "Parsing repos and tags..."
 
-      - name: Parse and print each repo and its tags
-        run: |
-          echo "Parsed output:"
+          # Convert escaped \n characters into real newlines
+          INPUT=$(echo -e "${{ github.event.inputs.repo_tags }}")
+
           while IFS= read -r line; do
             # Skip empty lines
-            if [[ -z "$line" ]]; then
-              continue
-            fi
+            [ -z "$line" ] && continue
 
             repo=$(echo "$line" | cut -d':' -f1)
             tags=$(echo "$line" | cut -d':' -f2)
@@ -39,4 +35,4 @@ jobs:
             for tag in "${tag_array[@]}"; do
               echo "  - Tag: $tag"
             done
-          done <<< "${{ github.event.inputs.repo_tags }}"
+          done <<< "$INPUT"
