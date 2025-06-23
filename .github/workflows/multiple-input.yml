@@ -1,0 +1,42 @@
+name: Parse Repos and Tags
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_tags:
+        description: 'Enter each repo and its tags in format repo:tag1,tag2 (one per line)'
+        required: true
+        default: |
+          repo1:tag1,tag2
+          repo2:tag3,tag4
+          repo3:tagA
+
+jobs:
+  print-repos-tags:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show raw input
+        run: |
+          echo "Raw input from UI:"
+          echo "${{ github.event.inputs.repo_tags }}"
+
+      - name: Parse and print each repo and its tags
+        run: |
+          echo "Parsed output:"
+          while IFS= read -r line; do
+            # Skip empty lines
+            if [[ -z "$line" ]]; then
+              continue
+            fi
+
+            repo=$(echo "$line" | cut -d':' -f1)
+            tags=$(echo "$line" | cut -d':' -f2)
+
+            echo "Repo: $repo"
+
+            IFS=',' read -ra tag_array <<< "$tags"
+            for tag in "${tag_array[@]}"; do
+              echo "  - Tag: $tag"
+            done
+          done <<< "${{ github.event.inputs.repo_tags }}"
