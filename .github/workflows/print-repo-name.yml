@@ -22,3 +22,10 @@ jobs:
           REPO_NAME="${REPO##*/}"
           echo "Repo name only: $REPO_NAME"
 
+      - name: Print complete repository details
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO_URL="https://api.github.com/repos/${{ github.repository }}"
+          echo "Fetching repository details from $REPO_URL"
+          curl -H "Authorization: token $GH_TOKEN" -s "$REPO_URL"
