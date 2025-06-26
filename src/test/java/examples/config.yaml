@@ -1,0 +1,9 @@
+dev:
+  baseUrl: https://jsonplaceholder.typicode.com
+  myVarName: devValue
+e2e:
+  baseUrl: https://your-e2e-api-url.com
+  myVarName: e2eValue
+prod:
+  baseUrl: https://your-prod-api-url.com
+  myVarName: prodValue
