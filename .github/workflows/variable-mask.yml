@@ -22,7 +22,7 @@ jobs:
         env:
           RUNTIME_TOKEN: ${{ steps.generate.outputs.my_value }}
         run: |
-          echo "Token in same job (masked): $RUNTIME_TOKEN"
+          echo "Token in same job (masked): $RUNTIME_TOKEN+24"
 
   deploy:
     needs: build
