@@ -1,0 +1,35 @@
+name: Pass Python‑Generated Value
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:                 # <‑‑ expose the step output as a job output
+      token: ${{ steps.generate.outputs.my_value }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate value in Python
+        id: generate          # <‑‑ step ID so we can reference its outputs
+        run: |
+          python generate_value.py
+
+      - name: Use value in same job
+        env:
+          RUNTIME_TOKEN: ${{ steps.generate.outputs.my_value }}
+        run: |
+          echo "Token in same job (masked): $RUNTIME_TOKEN"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use value from previous job
+        env:
+          RUNTIME_TOKEN: ${{ needs.build.outputs.token }}
+        run: |
+          echo "Token in second job (masked): $RUNTIME_TOKEN"
