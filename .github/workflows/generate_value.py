@@ -8,7 +8,7 @@ Creates a runtime value and publishes it to GitHub Actions so that:
 import os, secrets
 
 # 1️⃣ Generate whatever value you need
-runtime_value = secrets.token_urlsafe(32)   # <-- your logic here
+runtime_value = 25   # <-- your logic here
 
 # 2️⃣ Mask it so it never appears in clear text
 print(f"::add-mask::{runtime_value}", flush=True)
