@@ -16,7 +16,7 @@ jobs:
       - name: Generate value in Python
         id: generate          # <‑‑ step ID so we can reference its outputs
         run: |
-          python generate_value.py
+          python .github.workflows/generate_value.py
 
       - name: Use value in same job
         env:
